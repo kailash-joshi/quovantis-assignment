@@ -5,24 +5,23 @@ export default class ReactBootstrapPagination extends React.Component {
     constructor(props){
         super(props);
     }
+    renderPagination = () => {
+        const {totalPages, currentPageNumber} = this.props;
+        const array = new Array(totalPages).fill(0);
+        const Pager = array.map((item, i) => {
+            return (currentPageNumber === i+1) ? 
+                <Pagination.Item key={i} active>{i+1}</Pagination.Item> : 
+                <Pagination.Item key={i}>{i+1}</Pagination.Item>
+        })
+        return Pager;
+    }
+    onClick = (e) => {
+        this.props.handlePageChange(e.target.text);
+    }
     render(){
         return <>
-            <Pagination>
-                <Pagination.First />
-                <Pagination.Prev />
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Ellipsis />
-
-                <Pagination.Item>{10}</Pagination.Item>
-                <Pagination.Item>{11}</Pagination.Item>
-                <Pagination.Item active>{12}</Pagination.Item>
-                <Pagination.Item>{13}</Pagination.Item>
-                <Pagination.Item disabled>{14}</Pagination.Item>
-
-                <Pagination.Ellipsis />
-                <Pagination.Item>{20}</Pagination.Item>
-                <Pagination.Next />
-                <Pagination.Last />
+            <Pagination onClick={this.onClick}>
+                {this.renderPagination()}
             </Pagination>
         </>
     }
